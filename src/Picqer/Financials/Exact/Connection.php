@@ -470,7 +470,7 @@ class Connection
                 return [];
             }
 
-            Psr7\Message::rewindBody($response);
+            Psr7\rewind_body($response);
             $json = json_decode($response->getBody()->getContents(), true);
             if (false === is_array($json)) {
                 throw new ApiException('Json decode failed. Got response: ' . $response->getBody()->getContents());
@@ -514,7 +514,7 @@ class Connection
             }
 
             $answer = [];
-            Psr7\Message::rewindBody($response);
+            Psr7\rewind_body($response);
             $simpleXml = new \SimpleXMLElement($response->getBody()->getContents());
 
             foreach ($simpleXml->Messages as $message) {
@@ -596,7 +596,7 @@ class Connection
 
             $response = $this->client()->post($this->getTokenUrl(), $body);
 
-            Psr7\Message::rewindBody($response);
+            Psr7\rewind_body($response);
             $body = json_decode($response->getBody()->getContents(), true);
 
             if (json_last_error() === JSON_ERROR_NONE) {
@@ -745,7 +745,7 @@ class Connection
 
         $this->extractRateLimits($response);
 
-        Psr7\Message::rewindBody($response);
+        Psr7\rewind_body($response);
         $responseBody = $response->getBody()->getContents();
         $decodedResponseBody = json_decode($responseBody, true);
 
